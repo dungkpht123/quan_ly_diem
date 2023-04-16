@@ -26,13 +26,13 @@
               echo($thatbai);
             } ?>
             <div class="form-label-group">
-              <input type="text" name="username" id="inputtext" class="form-control" placeholder="Username" required="required" autofocus="autofocus">
-              <label for="inputtext">Username</label>
+              <input type="text" name="email" id="inputtext" class="form-control" placeholder="Email" autofocus="autofocus">
+              <label for="inputtext">Email</label>
             </div>
           </div>
           <div class="form-group">
             <div class="form-label-group">
-              <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+              <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
               <label for="inputPassword">Password</label>
             </div>
           </div>
