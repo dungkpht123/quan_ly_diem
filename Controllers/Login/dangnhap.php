@@ -88,7 +88,7 @@ switch ($action) {
 				}
 				else
 				{
-					$thatbai = "<p style ='color:red'>* Tên đăng nhập hoặc Mật khẩu không đúng.!</p>";
+					$thatbai = "<p style ='color:red'>* Mật khẩu hoặc gmail không chính xác!</p>";
 					//header('location:index.php');
 					require_once 'View/login.php';
 				}
