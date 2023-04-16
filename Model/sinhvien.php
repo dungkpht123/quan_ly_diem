@@ -31,7 +31,7 @@ class Sinhvien extends Database_ql_diem
 	}
 	public static function Seach($txt_Tiemkiem)
 	{
-		$sql = "SELECT * FROM sinhvien, lop WHERE sinhvien.ma_lop = lop.ma_lop AND sinhvien.hoten_sv LIKE '%$txt_Tiemkiem%'";
+		$sql = "SELECT * FROM sinhvien WHERE  sinhvien.hoten_sv OR sinhvien.ma_sv LIKE '$txt_Tiemkiem'";
 		return parent::Getdata($sql);
 	}
 }
