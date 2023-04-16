@@ -11434,7 +11434,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sEmptyTable": "Không có dữ liệu trong bảng",
+			"sEmptyTable": "Sinh viên không tồn tại",
 	
 	
 			/**
