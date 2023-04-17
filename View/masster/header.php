@@ -12,12 +12,23 @@ if (isset($_SESSION['username'])) {
       <i class="fas fa-bars"></i>
     </button>
 
+    <script>
+        function simpleAlert() {
+            var inputSearch = document.getElementById("searchTxt").value;
+            if(inputSearch == ""){
+              alert("Ô tìm kiến không được để trống");
+              driver.switchTo().alert().accept();
+            }
+        }
+ 
+    </script>
+
     <!-- Navbar Search -->
     <form action="index.php?controllers=quanly&action=Seach" method="POST" class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <div class="input-group">
-            <input type="text" class="form-control" name="gtTimkiem" placeholder="Tìm kiếm...">
+            <input id="searchTxt" type="text" class="form-control" name="gtTimkiem" placeholder="Tìm kiếm..." >
             <div class="input-group-append">
-              <button class="btn btn-success" name="Timkiem" type="submit">Tìm kiếm</button>  
+              <button class="btn btn-success" name="Timkiem" type="submit" onclick="simpleAlert()">Tìm kiếm</button>  
             </div>
           </div>
     </form>

@@ -19,11 +19,7 @@ switch ($action) {
 		if (isset($_POST['Timkiem'])) {
 			$gtTimkiem = $_POST['gtTimkiem'];
 
-			if($gtTimkiem == ""){
-				echo '<script type ="text/JavaScript">';  
-				echo 'alert("Ô tìm kiến không được để trống")';  
-				echo '</script>';
-			}
+			
 
 			$list_sv = Sinhvien::Seach($gtTimkiem);
 		}
