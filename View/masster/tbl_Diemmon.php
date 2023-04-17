@@ -57,7 +57,7 @@
               </table>
             </div>
           </div>
-          <div class="card-footer small text-muted">Cập nhật ngày hôm qua lúc 11:59</div>
+          <!-- <div class="card-footer small text-muted">Cập nhật ngày hôm qua lúc 11:59</div> -->
         </div>
 
       </div>

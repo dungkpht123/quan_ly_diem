@@ -67,13 +67,13 @@
 
                 <div class="form-group">
                   <div class="form-label-group">
-                    <input type="text" name="txt_diemGK" id="inputdiemGK" class="form-control" value="<?php echo $value['diem_giua_ky']; ?>" placeholder="Điểm giữa kỳ" required="required">
+                    <input type="text" name="txt_diemGK" id="inputdiemGK" class="form-control" value="<?php echo $value['diem_giua_ky']; ?>" placeholder="Điểm giữa kỳ" >
                     <label for="inputdiemGK">Điểm giữa kỳ</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="form-label-group">
-                    <input type="text" name="txt_diemTHK" id="inputdiemTHK" class="form-control" value="<?php echo $value['diem_thi_hp']; ?>" placeholder="Điểm thi học kỳ" required="required">
+                    <input type="text" name="txt_diemTHK" id="inputdiemTHK" class="form-control" value="<?php echo $value['diem_thi_hp']; ?>" placeholder="Điểm thi học kỳ" >
                     <label for="inputdiemTHK">Điểm thi học kỳ</label>
                   </div>
                 </div>
