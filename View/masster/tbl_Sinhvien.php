@@ -27,7 +27,7 @@
                     <th>Giới tính</th>
                     <th>Dân tộc</th>
                     <th>Nơi sinh</th>
-                    <th>Lớp</th>
+                    <!-- <th>Lớp</th> -->
                     <th>Hành động</th>
                   </tr>
                 </thead>
@@ -48,7 +48,7 @@
                     <td><?php echo $value['gioi_tinh']; ?></td>
                     <td><?php echo $value['dan_toc']; ?></td>
                     <td><?php echo $value['noi_sinh']; ?></td>
-                    <td><?php echo $value['ten_lop']; ?></td>
+                    <!-- <td><?php echo $value['ten_lop']; ?></td> -->
                     <td>
                       <a href="index.php?controllers=quanly&action=Edit&maSV=<?php echo $value['ma_sv']; ?>" title="Sửa"><i class="fas fa-edit"></i> </a>
                       <a onclick="return confirm('Bạn có chắc chắn muốn xóa không..?')" href="index.php?controllers=quanly&action=Delete&maSV=<?php echo $value['ma_sv']; ?>" title="Xóa"><i class="fas fa-trash-alt"> </i></a>
