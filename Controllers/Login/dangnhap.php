@@ -74,24 +74,31 @@ switch ($action) {
 	case 'Admin':
 		
 		if (isset($_POST['login'])) {
-			$text_username = $_POST['username'];
+			$text_email = $_POST['email'];
 			$text_password = md5($_POST['password']);
-
-			$list_user = Dangnhap::Login($text_username, $text_password);
-			// echo "<pre>";
-			// print_r($list_user);
-
-			// foreach ($list_user as $value) {
+			if (filter_var($text_email, FILTER_VALIDATE_EMAIL)) {
+			if(strlen($_POST['password'])>=8){
+				$list_user = Dangnhap::Login($text_email, $text_password);
 				if ($list_user > 0) {
-					$_SESSION["username"] = $text_username;
+					$_SESSION["username"] = $text_email;
 					header('location:index.php?controllers=quanly&action=Admin');
 				}
 				else
 				{
-					$thatbai = "<p style ='color:red'>* Tên đăng nhập hoặc Mật khẩu không đúng.!</p>";
+					$thatbai = "<p style ='color:red'>* Mật khẩu hoặc gmail không chính xác!</p>";
 					//header('location:index.php');
 					require_once 'View/login.php';
 				}
+			}else{
+				$thatbai = "<p style ='color:red'>* Mật khẩu không đủ 8 ký tự trở lên!</p>";
+					//header('location:index.php');
+					require_once 'View/login.php';			
+			}	
+			}else{
+				$thatbai = "<p style ='color:red'>* Định dạng email (example@gmail.com) bị sai!</p>";
+					//header('location:index.php');
+					require_once 'View/login.php';
+			}
 			//}
 		}
 		//require_once 'View/login.php';

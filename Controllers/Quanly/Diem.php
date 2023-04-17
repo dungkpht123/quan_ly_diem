@@ -51,15 +51,31 @@ switch ($action) {
 
 			if (isset($_POST['suaDiem'])) {
 				$txt_diemGK = $_POST['txt_diemGK'];
-				$txt_diemTHK = $_POST['txt_diemTHK'];
-
-				if (DiemMHP::Edit($text_masv,$text_mamon,$txt_diemGK,$txt_diemTHK)) {
-					header('location:index.php?controllers=diem&action=QL_Diem');
+				$txt_diemTHK = $_POST['txt_diemTHK'];	
+				if(strlen(trim($txt_diemGK))==0){
+					$txt_diemGK=0;
+				}
+				if(strlen(trim($txt_diemTHK))==0){
+					$txt_diemTHK=0;
+				}
+				
+				if($txt_diemGK >=0 && $txt_diemGK <=10 && is_numeric($txt_diemGK) && is_numeric($txt_diemTHK)){
+					$txt_diemGK = round($txt_diemGK,1);
+					$txt_diemTHK = round($txt_diemTHK,1);	
+					if (DiemMHP::Edit($text_masv,$text_mamon,$txt_diemGK,$txt_diemTHK)) {
+						//header('location:index.php?controllers=diem&action=QL_Diem');
+						header('Location: ' . $_SERVER['HTTP_REFERER']);
+					}
+					else
+					{
+						$thatbai = "Sửa điểm thất bại";
+					}
+					
 				}
 				else
-				{
-					$thatbai = "Sửa điểm thất bại";
-				}
+					{
+						$thatbai = "Hiện thông báo nhập điểm không hợp lệ, ô điểm hiển thị điểm ban đầu";
+					}	
 			}
 		}
 		require_once 'View/Diem/edit_diem.php';
