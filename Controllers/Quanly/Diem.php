@@ -1,17 +1,21 @@
-<?php 
+<?php
 session_start();
 require_once 'Model/lop.php';
 require_once 'Model/sinhvien.php';
 require_once 'Model/Diemchitiep.php';
 require_once 'Model/diemhocpham.php';
 require_once 'Model/monhocphan.php';
+require_once 'dompdf/autoload.inc.php';
+
+use Dompdf\Dompdf;
+
+
 if (isset($_GET['action'])) {
 	$action = $_GET['action'];
-}
-else
-{
+} else {
 	$action = NULL;
 }
+
 switch ($action) {
 	case 'List_Diem':
 		if (isset($_GET['maSV'])) {
@@ -30,11 +34,9 @@ switch ($action) {
 			$txt_diemGK = $_POST['txt_diemGK'];
 			$txt_diemTHK = $_POST['txt_diemTHK'];
 
-			if (DiemMHP::ADD($maSV,$maM,$txt_diemGK,$txt_diemTHK)) {
+			if (DiemMHP::ADD($maSV, $maM, $txt_diemGK, $txt_diemTHK)) {
 				$thanhcong = "Thêm điểm thành công";
-			}
-			else
-			{
+			} else {
 				$thatbai = "Thêm điểm thất bại";
 			}
 		}
@@ -44,55 +46,48 @@ switch ($action) {
 		if (isset($_GET['maMon'])) {
 			$text_masv = $_GET['maSV'];
 			$text_mamon = $_GET['maMon'];
-			$list_diem_lop_sinhvien = DiemMHP::D_M_SV($text_masv,$text_mamon);
+			$list_diem_lop_sinhvien = DiemMHP::D_M_SV($text_masv, $text_mamon);
 
 			// echo "<pre>";
 			// print_r($list_diem_lop_sinhvien);
 
 			if (isset($_POST['suaDiem'])) {
 				$txt_diemGK = $_POST['txt_diemGK'];
-				$txt_diemTHK = $_POST['txt_diemTHK'];	
-				if(strlen(trim($txt_diemGK))==0){
-					$txt_diemGK=0;
+				$txt_diemTHK = $_POST['txt_diemTHK'];
+				if (strlen(trim($txt_diemGK)) == 0) {
+					$txt_diemGK = 0;
 				}
-				if(strlen(trim($txt_diemTHK))==0){
-					$txt_diemTHK=0;
+				if (strlen(trim($txt_diemTHK)) == 0) {
+					$txt_diemTHK = 0;
 				}
-				
-				if($txt_diemGK >=0 && $txt_diemGK <=10 && is_numeric($txt_diemGK) && is_numeric($txt_diemTHK)){
-					$txt_diemGK = round($txt_diemGK,1);
-					$txt_diemTHK = round($txt_diemTHK,1);	
-					if (DiemMHP::Edit($text_masv,$text_mamon,$txt_diemGK,$txt_diemTHK)) {
+
+				if ($txt_diemGK >= 0 && $txt_diemGK <= 10 && is_numeric($txt_diemGK) && is_numeric($txt_diemTHK)) {
+					$txt_diemGK = round($txt_diemGK, 1);
+					$txt_diemTHK = round($txt_diemTHK, 1);
+					if (DiemMHP::Edit($text_masv, $text_mamon, $txt_diemGK, $txt_diemTHK)) {
 						//header('location:index.php?controllers=diem&action=QL_Diem');
 						header('Location: ' . $_SERVER['HTTP_REFERER']);
-					}
-					else
-					{
+					} else {
 						$thatbai = "Sửa điểm thất bại";
 					}
-					
+				} else {
+					$thatbai = "Hiện thông báo nhập điểm không hợp lệ, ô điểm hiển thị điểm ban đầu";
 				}
-				else
-					{
-						$thatbai = "Hiện thông báo nhập điểm không hợp lệ, ô điểm hiển thị điểm ban đầu";
-					}	
 			}
 		}
 		require_once 'View/Diem/edit_diem.php';
 		break;
 	case 'Delete_Diem_HP':
-		
+
 		if (isset($_GET['maMon'])) {
 			$text_masv = $_GET['maSV'];
 			$text_mamon = $_GET['maMon'];
-			
+
 			// echo "Mã sinh viên là: ".$text_masv."<br/>";
 			// echo "Mã Môn là: ".$text_mamon."<br/>";
-			if (DiemMHP::Delete($text_masv,$text_mamon)) {
+			if (DiemMHP::Delete($text_masv, $text_mamon)) {
 				header('location:index.php?controllers=diem&action=QL_Diem');
-			}
-			else
-			{
+			} else {
 				echo "Xóa thất bại";
 			}
 		}
@@ -117,53 +112,51 @@ switch ($action) {
 			$list_lop_sinhvien = Lop::Lop_Sinhvien($txt_malop);
 		}
 		if (isset($_POST["xem"])) {
-			if(isset($_POST['txt_masinhvien'])){
+			if (isset($_POST['txt_masinhvien'])) {
 				$txt_masinhvien = $_POST['txt_masinhvien'];
 
 				$sv = Sinhvien::GetId($txt_masinhvien);
 				$ttDiem = TongDiemChitiet::TDiem($txt_masinhvien);
-				
 			}
 		}
 		require_once 'View/Tonghopdiemsinhvien.php';
 		break;
 	case 'Thong_ke':
 		$sv = Sinhvien::List();
-		$dem=0;
+		$dem = 0;
 		foreach ($sv as $value) {
 			$ma_sv_l[] = $value['ma_sv'];
-			$dem = $dem+1;
+			$dem = $dem + 1;
 		}
-		for($i = 0; $i < $dem; $i++)
-		{  	
+		for ($i = 0; $i < $dem; $i++) {
 			//echo "Mã sinh viên [$i] là: ".$ma_sv_l[$i]."<br/>";
 			$sv_tc_sv = TongDiemChitiet::TDiem($ma_sv_l[$i]);
 
 			$TongSTC = 0;
 			$TongHDS = 0;
 			foreach ($sv_tc_sv as $value) {
-				$diemHP = round(($value['diem_giua_ky']*0.3)+($value['diem_thi_hp']*0.7),1);
+				$diemHP = round(($value['diem_giua_ky'] * 0.3) + ($value['diem_thi_hp'] * 0.7), 1);
 				$diemchu = TongDiemChitiet::DC($diemHP);
 				$diemheso = TongDiemChitiet::HDS($diemHP);
 
-				$TinhDHS = $value['sotinchi']*$diemheso;
+				$TinhDHS = $value['sotinchi'] * $diemheso;
 
 				$TongSTC += $value['sotinchi'];
 				$TongHDS += $TinhDHS;
 			}
-			$tbtk = round($TongHDS/$TongSTC,2);
-            $xltk = TongDiemChitiet::XL_TK($TongHDS/$TongSTC);
+			$tbtk = round($TongHDS / $TongSTC, 2);
+			$xltk = TongDiemChitiet::XL_TK($TongHDS / $TongSTC);
 
-            // echo "Tổng_STC: ".$TongSTC."<br/>";
-            // echo "TB_TK: ".$tbtk."<br/>";
-            // echo "XL_TK: ".$xltk."<br/>";
+			// echo "Tổng_STC: ".$TongSTC."<br/>";
+			// echo "TB_TK: ".$tbtk."<br/>";
+			// echo "XL_TK: ".$xltk."<br/>";
 
-            $TSTC = $TongSTC;
-            $TB_Toankhoa = $tbtk;
-            $XL_Toankhoa = $xltk;
+			$TSTC = $TongSTC;
+			$TB_Toankhoa = $tbtk;
+			$XL_Toankhoa = $xltk;
 
-            array_push($sv[$i],$TSTC,$TB_Toankhoa,$XL_Toankhoa);
-            $sv[$i] += ['STC' => $TSTC,'TB_Toankhoa' => $TB_Toankhoa,'XL_Toankhoa' => $XL_Toankhoa];
+			array_push($sv[$i], $TSTC, $TB_Toankhoa, $XL_Toankhoa);
+			$sv[$i] += ['STC' => $TSTC, 'TB_Toankhoa' => $TB_Toankhoa, 'XL_Toankhoa' => $XL_Toankhoa];
 		}
 
 		//$taokey = array_combine($keyarr, $TSTC);
@@ -177,6 +170,3 @@ switch ($action) {
 		echo "Trang không tồn tại";
 		break;
 }
-
-
- ?>
