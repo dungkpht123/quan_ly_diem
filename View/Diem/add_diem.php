@@ -59,12 +59,12 @@
                   <?php 
                     foreach ($list_sv as $value) {
                      ?>
-                    <option value="<?php echo $value['ma_sv']; ?>"><?php echo $value['hoten_sv']; ?></option>
+                    <option  value="<?php echo $value['ma_sv']; ?>"><?php echo $value['hoten_sv']; ?></option>
                   <?php } ?>
                   </select>
                   <br>
                   <label for="sel2">Tên học phần</label>
-                  <select class="form-control" id="sel2" name="sellist2" size="3">
+                  <select  required="true" class="form-control" id="sel2" name="sellist2" size="3">
                     <?php 
                     foreach ($list_hp as $value) {
                      ?>
@@ -75,13 +75,13 @@
 
                 <div class="form-group">
                   <div class="form-label-group">
-                    <input type="text" name="txt_diemGK" id="inputdiemGK" class="form-control" placeholder="Điểm giữa kỳ" required="required">
+                    <input type="text" name="txt_diemGK" id="inputdiemGK" class="form-control" placeholder="Điểm giữa kỳ">
                     <label for="inputdiemGK">Điểm giữa kỳ</label>
                   </div>
                 </div>
                 <div class="form-group">
                   <div class="form-label-group">
-                    <input type="text" name="txt_diemTHK" id="inputdiemTHK" class="form-control" placeholder="Điểm thi học kỳ" required="required">
+                    <input type="text" name="txt_diemTHK" id="inputdiemTHK" class="form-control" placeholder="Điểm thi học kỳ">
                     <label for="inputdiemTHK">Điểm thi học kỳ</label>
                   </div>
                 </div>

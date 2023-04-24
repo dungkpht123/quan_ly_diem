@@ -25,19 +25,37 @@ switch ($action) {
 		$list_sv = Sinhvien::List();
 		$list_hp = MonHP::List();
 		if (isset($_POST['themDiem'])) {
-			$maSV = $_POST['sellist1'];
-			$maM = $_POST['sellist2'];
-			$txt_diemGK = $_POST['txt_diemGK'];
-			$txt_diemTHK = $_POST['txt_diemTHK'];
+						$txt_diemGK = $_POST['txt_diemGK'];
+						$txt_diemTHK = $_POST['txt_diemTHK'];	
+						if(strlen(trim($txt_diemGK))==0){
+							$txt_diemGK=0;
+						}
+						if(strlen(trim($txt_diemTHK))==0){
+							$txt_diemTHK=0;
+						}
 
-			if (DiemMHP::ADD($maSV,$maM,$txt_diemGK,$txt_diemTHK)) {
-				$thanhcong = "Thêm điểm thành công";
+						if($txt_diemGK >=0 && $txt_diemGK <=10 && is_numeric($txt_diemGK) && is_numeric($txt_diemTHK)){
+					$maSV = $_POST['sellist1'];
+					$maM = $_POST['sellist2'];
+					$txt_diemGK = $_POST['txt_diemGK'];
+					$txt_diemTHK = $_POST['txt_diemTHK'];
+					$txt_diemGK = round($txt_diemGK,1);
+					$txt_diemTHK = round($txt_diemTHK,1);
+					if(strlen(trim($maM)>0)){
+						if (DiemMHP::ADD($maSV,$maM,$txt_diemGK,$txt_diemTHK)) {
+							$thanhcong = "Thêm điểm thành công";
+						}
+						else
+						{
+							$thatbai = "Bạn đã thêm điểm cho học phần này rồi, bạn có thể vào Sửa điểm";
+						}
+					}else{
+						$thatbai = "Bạn phải chọn môn học cần nhập điểm";
+					}	
+				}else{
+					$thatbai = "Nhập điểm không hợp lệ.";
+				}
 			}
-			else
-			{
-				$thatbai = "Thêm điểm thất bại";
-			}
-		}
 		require_once 'View/Diem/add_diem.php';
 		break;
 	case 'Edit_Diem_HP':
